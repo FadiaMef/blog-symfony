@@ -1,0 +1,18 @@
+{% extends "base.html.twig"%} {# On hérite de la page base.html.twig#}
+
+{% block body %}
+
+    {{ parent()}} {#permet de garder le contenu du block de la page parente (base.html.twig)#}
+
+    {# {% set prenom = "Fadia" %} création d'une variable en twig #}
+    <p>Bonjour, je suis {{ prenom }} {{ nom }}</p> {# Affichage d'une variable en twig #}
+
+    <p>Bonjour, je suis {{ prenom ~ ' ' ~ nom }}</p> {# Affichage de variables concaténées #}
+
+    {% for personne in personnes %}
+
+        <p>Bonjour, je suis {{ personne.prenom ~ ' ' ~ personne.nom }}</p> {# Affichage de variables dans un tableau: on utilise une boucle avec le mot for : twig crée la condition avec le nom item et items, on change par la suite ces mots avec nos infos et on accéde ainsoi aux infos du tableau, on pioche les infos avec le . (point)#}
+    {% endfor %}
+    
+
+{% endblock %}

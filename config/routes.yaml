@@ -1,3 +1,48 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# Route permettant d'afficher notre page, existe sur TestController aussi lignes 12-14 :
+
+# app_test:
+#     path: /test
+#     controller: App\Controller\TestController::index 
+
+app_cgv:
+    path: /cgv
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'statique/cgv.html.twig'
+
+app_contact:
+    path: /contact
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'statique/contact.html.twig'
+
+app_devenir_blogueur:
+    path: /devenirblogueur
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'statique/devenirBlogueur.html.twig'
+
+app_qui_sommes_nous:
+    path: /quisommesnous
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'statique/quiSommesNous.html.twig'
+
+app_values:
+    path: /values
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'statique/values.html.twig'
+
+app_join_team:
+    path: /jointeam
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'statique/joinTeam.html.twig'
+
+
+
