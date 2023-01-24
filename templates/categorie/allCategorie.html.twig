@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Les catégories {% endblock %}
+
+{% block content %}
+<h1 class="text-center"> Les catégories </h1>
+
+    <table class="table text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nom</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}    
+                <tr>
+                    <td>{{ categorie.nom }}</td>
+                    <td>
+                        </a>
+                        <a href="{{ path('app_categorie_update', {id: categorie.id}) }}">
+						<i class="fas fa-edit mx-1 text-primary"></i>
+                        </a>
+                        <a href="{{ path('app_categorie_delete', {id: categorie.id}) }}"  onClick="return confirm('êtes vous sûr de vouloir supprimer l\'auteur ?')" >
+                            <i class="fas fa-trash mx-1 text-danger"></i>
+                        </a> 
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

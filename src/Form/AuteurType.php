@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AuteurType extends AbstractType
@@ -19,6 +20,11 @@ class AuteurType extends AbstractType
             ->add('dateDeNaissance', DateType::class, [
                 'widget' => 'single_text',
                 // 'format' => 'yyyy-MM-dd'
+            ])
+            ->add('imageForm', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Ajouter une image'
             ])
             ->add('biographie')
             ->add('envoyer', SubmitType::class)

@@ -3,12 +3,31 @@
 {% block title %}fiche auteur{% endblock %}
 
 {% block content %}
-    <h2> {{ auteur.nom ~ ' ' ~ auteur.prenom }} </h2>
-    <h5> né(e) le: {{ auteur.dateDeNaissance | date("d/m/Y") }}</h5>
+    
 
     <div class="row justify-content-center">
+        
+        <div class="col-offset-2 col-8">
+                <h2> {{ auteur.prenom ~ ' ' ~ auteur.nom }} </h2>
+                <h5> né(e) le: {{ auteur.dateDeNaissance | date("d/m/Y") }}</h5>
+        </div>
+
+        {# Affichage de l'image de l'auteur: #}
+        {% if auteur.image is not null %}
+        {# la fonction asset () va chercher dans le dossier public#}
+        <img src="{{ asset('images/auteurs/' ~ auteur.image) }}" class="img-fluid m-3"  alt="{{auteur.fullname}}" style= "width: 40%">      
+        {% endif %}
+
         <div class="col-offset-2 col-8">
             <p> {{ auteur.biographie }}</p>
+        
+            <nav class="navbar navbar-light" >
+                {% for article in auteur.articles %}
+                    <a href="{{ path('app_article', {id: article.id}) }}" class="btn btn-outline-primary me-2" type="button" >
+                        {{ article.titre }}
+                    </a>
+                {% endfor %}
+            </nav>
         </div>
     </div>
 

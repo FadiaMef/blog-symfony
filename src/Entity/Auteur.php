@@ -3,39 +3,41 @@
 namespace App\Entity;
 
 use App\Repository\AuteurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=AuteurRepository::class)
- */
+#[ORM\Entity(repositoryClass: AuteurRepository::class)]
 class Auteur
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $nom;
+    #[ORM\Column(length: 100)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $prenom;
+    #[ORM\Column(length: 100)]
+    private ?string $prenom = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $dateDeNaissance;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateDeNaissance = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $biographie;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $biographie = null;
+
+    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Article::class)]
+    private Collection $articles;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,4 +91,58 @@ class Auteur
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getAuteur() === $this) {
+                $article->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    //On crée cette méthode afin de pouvoir récupérer le nom et prenom en même temps pour les afficher dans la page ajout article, on va appeler cette méthode dans ArticleType 'fullname' :
+    public function getFullName()
+    {
+        return $this->prenom . ' ' . $this->nom;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    
+
+
+
+
 }

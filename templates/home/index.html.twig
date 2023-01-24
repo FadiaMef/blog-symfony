@@ -5,14 +5,25 @@
 {% block content %}
     <div class="row mt-5 justify-content-center text-center">
         <h1>Dernier article publié</h1>
+            
         <div>
             <h3> {{ article.titre }} </h3>
 
             <h6 class="text-muted">publié le : {{ article.dateDeCreation | date("d/m/Y \à H\\hi") }} </h6>
 
-            <h6 class="text-muted">modifié le : </h6>
+            <h6 class="text-muted">modifié le : {{ article.dateDeModification | date("d/m/Y \à H\\hi") }} </h6>
 
-            <h6>auteur: </h6>
+            {% if article.auteur is not null %}
+                    <h6>auteur:{{ article.auteur.fullName }} </h6>
+                    {% else %}
+                    <h6 class="text-muted"> auteur anonyme </h6>
+            {% endif %}
+
+            {# Affichage de l'image : #}
+            {% if article.image is not null %}
+            {# la fonction asset () va chercher dans le dossier public#}
+            <img src="{{ asset('images/articles/' ~ article.image) }}" class="img-fluid m-3"  alt="{{article.titre}}" style= "width: 60%">      
+            {% endif %}
 
             <p>{{ article.contenu }}</p>
         </div>
